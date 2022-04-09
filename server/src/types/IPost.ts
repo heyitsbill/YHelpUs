@@ -1,6 +1,7 @@
 import { IUser } from "./IUser";
 export interface IPost {
     _id?: string;
+    title: string;
     authorID: string;
     price: number; 
     description: string;

@@ -1,0 +1,9 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "paths": {
+      "@backend/*": ["../server/*"]
+    },
+    "strict": true
+  }
+}

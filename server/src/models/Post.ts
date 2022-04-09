@@ -40,6 +40,10 @@ const PostSchema = new mongoose.Schema({
   accepteeID:{
     type: mongoose.Schema.Types.ObjectId,
   },
+  title:{
+      type: String,
+      required: true,
+  },
 });
 
 PostSchema.set('toJSON', {
