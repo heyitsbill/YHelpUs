@@ -1,7 +1,7 @@
 export interface IMessage {
     _id?: string;
-    fromID: string; 
-    toID: string;
+    from: string; 
+    to: string;
     content: string;
     createdAt: Date;
 };

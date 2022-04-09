@@ -1,7 +1,6 @@
 export interface IPost {
-    authorID: string;
-    price: number; 
-    description: string;
-    time: Date;
-  };
-  
+  authorID: string;
+  price: number;
+  description: string;
+  time: Date;
+};
