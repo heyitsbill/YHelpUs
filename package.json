@@ -3,8 +3,8 @@
     "version": "1.0",
     "main": "index.js",
     "scripts": {
-        "server": "cd server && yarn start",
-        "client": "cd client && yarn start-clients",
+        "server": "cd server && yarn dev",
+        "client": "cd client && yarn start-client",
         "install-server": "cd server && yarn",
         "install-client": "cd client && yarn"
     }
