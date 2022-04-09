@@ -9,5 +9,7 @@ export interface IPost {
     length: string;
     activeUntil?: Date;
     author?: IUser;
+    acceptee?: IUser;
+    accepteeID?: string;
   };
   

@@ -36,7 +36,10 @@ const PostSchema = new mongoose.Schema({
   },
   activeUntil:{
     type: Date,
-  }
+  },
+  accepteeID:{
+    type: mongoose.Schema.Types.ObjectId,
+  },
 });
 
 PostSchema.set('toJSON', {
