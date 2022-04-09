@@ -1,14 +1,12 @@
 import mongoose, { Schema, Types } from "mongoose";
-import { IUser } from "../types";
-import {User} from "../models";
 import { IMessage } from "../types";
 
 const MessageSchema = new mongoose.Schema({
-  fromID:{
+  from:{
     type: Schema.Types.ObjectId,
     required: true
   },
-  toID:{
+  to:{
     type: Schema.Types.ObjectId,
     required: true
   },
