@@ -5,6 +5,7 @@
     "scripts": {
         "server": "cd server && yarn start",
         "client": "cd client && yarn start-clients",
-        "install": "yarn && cd server && yarn && cd ../client && yarn"
+        "install-server": "cd server && yarn",
+        "install-client": "cd client && yarn"
     }
 }
