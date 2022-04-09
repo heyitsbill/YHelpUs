@@ -1,0 +1,9 @@
+{
+    "name": "YHelpUs",
+    "version": "1.0",
+    "license": "idk lol",
+    "scripts": {
+        "server": "cd server && node server.js",
+        "client": "cd client && npm start"
+    }
+}
