@@ -1,9 +1,10 @@
 {
-    "name": "YHelpUs",
+    "name": "yhelpus",
     "version": "1.0",
-    "license": "idk lol",
+    "main": "index.js",
     "scripts": {
-        "server": "cd server && node server.js",
-        "client": "cd client && npm start"
+        "server": "cd server && yarn start",
+        "client": "cd client && yarn start-clients",
+        "install": "yarn && cd server && yarn && cd ../client && yarn"
     }
 }
