@@ -17,6 +17,25 @@ const PostSchema = new mongoose.Schema({
   time:{
     type: Date,
     required: true
+  },
+  status:{
+    type: String,
+    enum:{
+      values: ["active", "accepted", "expired", "completed"],
+      message: "Invalid status"
+    },
+    required: true
+  },
+  length:{
+    type: String,
+    enum:{
+      values: ["0-10 min", "10-30 min", "30-60 min", "60+ min", "N/A"],
+      message: "Invalid length"
+    },
+    required: true
+  },
+  activeUntil:{
+    type: Date,
   }
 });
 

@@ -10,7 +10,8 @@
 ## Create Posting View/Popup
 ## View All Postings
 * Filter Option
-## View Own Posting
+## View Own Postings
+## View completed tasks
 ## View Person's Profile
 ## Chat with other person
 ## View specific posting
@@ -21,6 +22,7 @@
 # User
 * Name
 * Email 
+* Reputation
 
 # Message
 * Content
