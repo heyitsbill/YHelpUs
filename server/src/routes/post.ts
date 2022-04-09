@@ -25,12 +25,39 @@ router.delete("/:postID", (req: Request, res: Response) => {
 });
 
 router.get("/", async(req: Request, res: Response) => {
-    try {
-      const posts = await Post.find();
-      res.send(posts);
-    } catch (err) {
-      res.status(500).send("A database error occurred.");
-    }
-  });
+  try {
+    const posts = await Post.find();
+    res.send(posts);
+  } catch (err) {
+    res.status(500).send("A database error occurred.");
+  }
+});
+
+router.get("/:userID", async(req: Request, res: Response) => {
+  try {
+    const posts = await Post.find({$or: [{authorID: req.params.userID}, {accepteeID: req.params.userID}]});
+    res.send(posts);
+  } catch (err) {
+    res.status(500).send("A database error occurred.");
+  }
+});
+
+router.get("/mine/:userID", async(req: Request, res: Response) => {
+  try {
+    const posts = await Post.find({authorID: req.params.userID});
+    res.send(posts);
+  } catch (err) {
+    res.status(500).send("A database error occurred.");
+  }
+});
+
+router.get("/theirs/:userID", async(req: Request, res: Response) => {
+  try {
+    const posts = await Post.find({accepteeID: req.params.userID});
+    res.send(posts);
+  } catch (err) {
+    res.status(500).send("A database error occurred.");
+  }
+});
 
 export default router;
