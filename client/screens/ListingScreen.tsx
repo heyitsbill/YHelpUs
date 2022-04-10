@@ -5,11 +5,12 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { RootTabScreenProps } from '../types';
 import { IPost } from '@backend/src/types';
 import { useState, useEffect } from 'react';
-import { getPosts, deletePost } from '../services'
+import { getPosts, deletePost, getUserId } from '../services'
 import { Card } from '../components/PostComponent';
 
 export default function ListingScreen({ navigation }: any) {
   const [allPosts, setAllPosts] = useState<IPost[]>([])
+  const [userID, setUserID] = useState('')
   
   //fetch all posts
     useEffect(()=>{
@@ -18,12 +19,21 @@ export default function ListingScreen({ navigation }: any) {
         // Call any action
         (async () => {
                   const posts = await getPosts()
+                  
                   const ourPosts = posts.data
                   setAllPosts(ourPosts)
               })()
       });
       return unsubscribe;
     }, [navigation]);
+
+
+    useEffect(()=>{
+        (async () => {
+            const id = await getUserId()
+            setUserID(id)
+        })()
+    }, [userID])
     // useEffect(() => {
     //     (async () => {
     //         const posts = await getPosts()
@@ -52,7 +62,7 @@ export default function ListingScreen({ navigation }: any) {
       <View style={home.menuView}>
         {allPosts
           .map((post) => (
-            <Card key={post._id} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
+            <Card key={post._id} onPressDelete={handleDeletePost} post={post} userID={userID}  onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
           ))}
       </View>
     </ScrollView>

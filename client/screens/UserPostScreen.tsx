@@ -5,12 +5,20 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { RootTabScreenProps } from '../types';
 import { IPost } from '@backend/src/types';
 import { useState, useEffect } from 'react';
-import { getUserPosts, getAcceptedPosts } from '../services'
+import { getUserPosts, getAcceptedPosts, getUserId, deletePost } from '../services'
 import { Card } from '../components/PostComponent';
 
 export default function UserPostScreen({ navigation }: any, props: any) {
   const [myPosts, setMyPosts] = useState<IPost[]>([])
   const [acceptedPosts, setAcceptedPosts] = useState<IPost[]>([])
+  const [userID, setUserID] = useState('')
+
+  useEffect(()=>{
+    (async () => {
+        const id = await getUserId()
+        setUserID(id)
+    })()
+}, [userID])
 
   //fetch all posts
   useEffect(()=>{
@@ -18,10 +26,11 @@ export default function UserPostScreen({ navigation }: any, props: any) {
       // The screen is focused
       // Call any action
       (async () => {
-        const posts = await getUserPosts('6252257bb24f8e6622ed8886')
+        const id = await getUserId()
+        const posts = await getUserPosts(id)
         const ourPosts = posts.data
         setMyPosts(ourPosts)
-        const postsAgain = await getAcceptedPosts('6252257bb24f8e6622ed8886')
+        const postsAgain = await getAcceptedPosts(id)
         const ourPostsAgain = postsAgain.data
         setAcceptedPosts(ourPostsAgain)
     })()
@@ -29,6 +38,16 @@ export default function UserPostScreen({ navigation }: any, props: any) {
     return unsubscribe;
   }, [navigation]);
 
+  const handleDeletePost = async (postID: string) => {
+    await deletePost(postID)
+    const id = await getUserId()
+      const posts = await getUserPosts(id)
+      const ourPosts = posts.data
+      setMyPosts(ourPosts)
+      const postsAgain = await getAcceptedPosts(id)
+      const ourPostsAgain = postsAgain.data
+      setAcceptedPosts(ourPostsAgain)
+    }
 
   const handlePressPost = (post: IPost) => {
   }
@@ -39,7 +58,7 @@ export default function UserPostScreen({ navigation }: any, props: any) {
       <View style={home.menuView}>
         {myPosts
           .map((post) => (
-            <Card key={post._id} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
+            <Card key={post._id} onPressDelete={handleDeletePost} userID={userID} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
           ))}
       </View>
     </ScrollView>
@@ -48,7 +67,7 @@ export default function UserPostScreen({ navigation }: any, props: any) {
         <View style={home.menuView}>
             {acceptedPosts
                 .map((post) => (
-                    <Card key={post._id} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
+                    <Card key={post._id} onPressDelete={handleDeletePost} userID={userID} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
                 ))}
         </View>
     </ScrollView>
