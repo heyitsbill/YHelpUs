@@ -42,13 +42,7 @@ export const Card = (props: CardProps) => {
   return (
       <View style={{ margin: 4 }}>
           <Pressable onPress={props.onPress}
-            style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1,
-                                       backgroundColor: "#8ac6ff", 
-                                       borderRadius: "16", 
-                                       borderWidth: 2, 
-                                       borderColor: "black", 
-                                       borderStyle: "solid",
-                                       padding: 8 }]}>
+            style={styles.pressable}>
                 <View style={{flexDirection: "row"}}>
                     {props.post.authorID === '6252257bb24f8e6622ed8886' ? 
                     
@@ -61,7 +55,7 @@ export const Card = (props: CardProps) => {
                         <Text>{timeRemaining(props.post)}</Text>
                     </View>
                     <View style={{ maxWidth: "25%", marginLeft: "auto", marginRight: 25, marginTop: "auto", marginBottom: "auto" }}>
-                        <Pressable onPress={onPressTrash}>
+                        <Pressable onPress={()=>onPressTrash(props.post)}>
                             <TrashIcon name="trash" color="black" />
                         </Pressable>
                     </View></> 

@@ -8,7 +8,6 @@ const MessageSchema = new mongoose.Schema({
   },
   to:{
     type: Schema.Types.ObjectId,
-    required: true
   },
   content:{
     type: String,
@@ -19,7 +18,8 @@ const MessageSchema = new mongoose.Schema({
     required: true
   },
   postId:{
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    required: true
   }
 });
 
