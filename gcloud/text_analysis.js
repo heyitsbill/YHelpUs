@@ -1,6 +1,7 @@
 // YHack 2022 - YHelpUs
 // Last edited: 4/9/2022
-// Most code stolen from GCP tutorial
+
+require('dotenv').config()
 
 // Imports the Google Cloud client library
 const language = require('@google-cloud/language');
@@ -9,6 +10,7 @@ const language = require('@google-cloud/language');
    for inappropriate content using GCP NLP */
 async function sentimenter(text) {
    // Instantiates a client
+   console.log(process.env.TEST_VAR);
    const client = new language.LanguageServiceClient();
  
    const document = {
