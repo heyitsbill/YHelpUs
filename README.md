@@ -1,40 +1,20 @@
-# YhelpUs
-`yarn install-server` to update server packages
-`yarn install-client` to update client packages
+# YHelpUs
+`cd server && yarn` to update server packages
+`cd client && yarn` to update client packages
 
-`yarn server` to start server
-`yarn client` to start client
+`cd server && yarn server` to start server
+`cd client && yarn start` to start client
 
-# Pages
-## Login Page
-## Create Posting View/Popup
-## View All Postings
-* Filter Option
-## View Own Postings
-## View completed tasks
-## View Person's Profile
-## Chat with other person
-## View specific posting
-* Accept the posting
+## Technologies
+We used the MERNN stack due to it's ease of use and separation of concerns. Additionally, we used the Google Cloud Natural Language Processing API in our application as an option for content moderation.
 
+## Features
+* Create postings and view other people's postings
+* Chat with other users while discussing postings
+* Set expirary dates and times to ensure relevancy on the job/task board
+* Have the option to specify 0 payment as a means for social interaction
 
-# Routes
-# User
-* Name
-* Email 
-* Reputation
-
-# Message
-* Content
-* From, To
-* Post ID?
-* Time sent
-
-# Post
-* Description
-* Estimated time
-* Time to be completed
-* Time to be active
-* Status: completed, expired
-* Owner
-* Acceptor
+## Future Steps
+* Focus on security and privacy
+* More filtering features
+* UI revamp

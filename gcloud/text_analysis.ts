@@ -28,7 +28,7 @@ async function sentimenter(text:string) {
    for inappropriate content using GCP NLP
    TRUE output means it's possibly inappropriate */
 export async function flagger(text:string) {
-   return false;
+   //return false;
    let [sentiment, sentences] = await sentimenter(text);
    if (sentiment < -0.6) {
       return true;
