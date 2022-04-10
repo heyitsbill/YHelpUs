@@ -2,11 +2,18 @@ import { Request, Response, Router } from "express";
 import { CallbackError, NativeError } from "mongoose";
 import { Post } from "../models";
 import { IPost } from "../types";
+import { flagger } from '../../../gcloud'
+
 
 const router = Router();
 
-router.post("/", (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
     const post = req.body;
+    let flag = await flagger(post.description);
+    flag = flag || await flagger(post.title);
+    if(flag) {
+        return res.status(400).send("Post contains inappropriate content");
+    }
     const newPost = new Post(post);
     newPost.save((err: CallbackError, savedJob: IPost) => {
       if(err) return res.status(500).send("A database error occurred.");

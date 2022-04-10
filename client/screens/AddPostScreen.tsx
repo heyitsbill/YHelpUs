@@ -18,7 +18,6 @@ const AddPostScreen = (props: AddPostProps) => {
     const [multipleDays, setMultipleDays] = useState(0);
     const [duration, setDuration] = useState(4);
 
-
     const [currPost, setPost] = useState<IPost>({
         title: '',
         description: '',
@@ -28,7 +27,6 @@ const AddPostScreen = (props: AddPostProps) => {
         status: 'active',
         length: "0-10 min"
     });
-
 
     const validateNumber = (value: any) => {
         const number = value.substring(2);
@@ -61,6 +59,7 @@ const AddPostScreen = (props: AddPostProps) => {
     }
 
     const [error, setError] = useState(Boolean);
+    const [inapperror, setinappError] = useState(Boolean);
 
     const handleSubmit = async () => {
         if(days !== 0 || hours !== 0){
@@ -81,11 +80,18 @@ const AddPostScreen = (props: AddPostProps) => {
 
 
 
+
+
             const newPost = await createPost(currPost);
-            if(newPost.status == 200){
+            if(newPost && newPost.status == 200){
                 props.navigation.navigate('MyPosts');
+            }else if(newPost === "Request failed with status code 400"){
+                setinappError(true);
+                setError(false);
             }else{
                 setError(true);
+                setinappError(false);
+
             }
         }
     }
@@ -199,7 +205,11 @@ return (
     
     </Form>
     {(error == true) &&
-        <Text style={styles.error}>Invalid email or password!</Text>
+        <Text style={styles.error}>Invalid post, please try again.</Text>
+      }
+
+    {(inapperror == true) &&
+        <Text style={styles.error}>Inappropriate, please try again.</Text>
       }
     </View>
   );
