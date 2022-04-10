@@ -9,6 +9,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AddPostScreen from './screens/AddPostScreen';
 import LoginScreen from './screens/LoginScreen';
+import SignupScreen from './screens/SignupScreen';
+import ListingScreen from './screens/ListingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,15 +25,16 @@ export default function App() {
       <SafeAreaProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen name="Profile" component={LoginScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Signup" component={SignupScreen} />
             <Stack.Screen
-              name="Home"
+              name="NewPost"
               component={AddPostScreen}
-              options={{ title: 'Welcome' }}
+              options={{ title: 'Create New Post' }}
             />
+            <Stack.Screen name="ListingScreen" component={ListingScreen} />
           </Stack.Navigator>
         </NavigationContainer>
-        {/* <Navigation colorScheme={colorScheme} /> */}
         <StatusBar />
       </SafeAreaProvider>
     );

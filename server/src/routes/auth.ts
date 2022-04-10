@@ -43,6 +43,7 @@ const router = Router();
 
 router.post('/login', (req: Request, res: Response) => {
   passport.authenticate('local', {session: false}, (err: Error, user: IUser, info: IVerifyOptions) => {
+    console.log("boooo, received login request");
     if(err || !user){
       return res.status(400).send(info ? info.message : "An error occurred.");
     }

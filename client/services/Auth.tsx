@@ -49,6 +49,7 @@ export const getUserId = async () => {
     return await AsyncStorage.getItem('userID')
   } catch(e) {
     // read error
+    return ''
   }
 
   console.log('Done.')
