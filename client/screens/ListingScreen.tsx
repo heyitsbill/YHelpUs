@@ -60,7 +60,7 @@ const menu = StyleSheet.create({
     wrapper: {
       flex: 1,
       flexDirection: 'column',
-      backgroundColor: '#eee',
+      backgroundColor: '#8aebff',
     },
   
     upperContainer: {
@@ -221,6 +221,7 @@ const home = StyleSheet.create({
   
     menuView: {
       margin: 8,
+      backgroundColor: "#8aebff",
     },
   
     footer: {

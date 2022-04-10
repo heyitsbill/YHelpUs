@@ -18,3 +18,11 @@ export const deletePost = async (postID: string) => {
 export const getPosts = async () => {
   return axios.get(`${baseUrl}/post`);
 };
+
+export const getUserPosts = async (userID: string) => {
+  return axios.get(`${baseUrl}/post/mine/${userID}`);
+};
+
+export const getAcceptedPosts = async (userID: string) => {
+  return axios.get(`${baseUrl}/post/theirs/${userID}`);
+};
