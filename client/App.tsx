@@ -18,6 +18,7 @@ import MaterialCommunityIcons from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { Ionicons } from '@expo/vector-icons'; 
+import ChatScreen from './screens/ChatScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -48,6 +49,14 @@ function Home() {
                 <Ionicons name="person-circle" size={24} color="black" />              ),
             }}
             />
+      <Tab.Screen
+              name="Chat"
+              component={ChatScreen}
+              options={{
+                tabBarButton: props=>null,
+              }}
+              />
+
     </Tab.Navigator>
   );
 }

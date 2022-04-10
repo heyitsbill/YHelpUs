@@ -1,7 +1,7 @@
 import { Form, FormItem, Picker } from 'react-native-form-component';
 import { useState } from 'react';
 import { IPost } from '@backend/src/types';
-import { createPost } from '../services';
+import { createPost, getUserId } from '../services';
 import { View, StyleSheet, Button, Alert , Text} from "react-native";
 
 interface AddPostProps {
@@ -23,7 +23,7 @@ const AddPostScreen = (props: AddPostProps) => {
         title: '',
         description: '',
         price: 0,
-        authorID: '62512b73d01b9a08a09b351c',
+        authorID: '',
         time: new Date(),
         status: 'active',
         length: "0-10 min"
@@ -74,6 +74,12 @@ const AddPostScreen = (props: AddPostProps) => {
             const finDL = addHours(deadline, ourHours);
             currPost.time = finDL;
             currPost.price = parseInt(price);
+            const authorID = await getUserId();
+            if(authorID) {
+                currPost.authorID = authorID;
+            }
+
+
 
             const newPost = await createPost(currPost);
             if(newPost.status == 200){

@@ -18,9 +18,9 @@ const SignupScreen = (props: SignupProps) => {
   const handleSubmit = async () => {
     const res = await register(email, password, name);
     if (res) {
-      props.navigation.navigate('NewPost');
+      props.navigation.navigate('Home');
     } else {
-      setError('Invalid info');
+      setError('Invalid info or database error');
     }
   }
 

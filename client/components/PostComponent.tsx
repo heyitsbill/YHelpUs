@@ -41,7 +41,7 @@ export const Card = (props: CardProps) => {
   }
   return (
       <View style={{ margin: 4 }}>
-          <Pressable onPress={onPressCard}
+          <Pressable onPress={props.onPress}
             style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1,
                                        backgroundColor: "#8ac6ff", 
                                        borderRadius: "16", 
@@ -80,6 +80,18 @@ export const Card = (props: CardProps) => {
         
   )
 }
+
+const styles = StyleSheet.create({
+  pressable:{
+    opacity: 1,
+    backgroundColor: "#8ac6ff", 
+    borderRadius: 16, 
+    borderWidth: 2, 
+    borderColor: "black", 
+    borderStyle: "solid",
+    padding: 8
+  }
+})
 
 const card = StyleSheet.create({
     cardText1: {

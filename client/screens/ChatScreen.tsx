@@ -5,58 +5,13 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { RootTabScreenProps } from '../types';
 import { IPost } from '@backend/src/types';
 import { useState, useEffect } from 'react';
-import { getPosts, deletePost } from '../services'
+import { getPosts } from '../services'
 import { Card } from '../components/PostComponent';
 
-export default function ListingScreen({ navigation }: any) {
-  const [allPosts, setAllPosts] = useState<IPost[]>([])
-  
-  //fetch all posts
-    useEffect(()=>{
-      const unsubscribe = navigation.addListener('focus', () => {
-        // The screen is focused
-        // Call any action
-        (async () => {
-                  const posts = await getPosts()
-                  const ourPosts = posts.data
-                  setAllPosts(ourPosts)
-              })()
-      });
-      return unsubscribe;
-    }, [navigation]);
-    // useEffect(() => {
-    //     (async () => {
-    //         const posts = await getPosts()
-    //         const ourPosts = posts.data
-    //         setAllPosts(ourPosts)
-    //     })()
-    // }, [])
-
-    const handlePressPost = (postid:string) => {
-      return ()=>{
-          // navigation.navigate('Chat', {postId: postid});
-      }
-    }
-
-  const handleDeletePost = async (postID: string) => {
-    await deletePost(postID)
-    const posts = await getPosts()
-    const ourPosts = posts.data
-    setAllPosts(ourPosts)
-    }
-
-
+export default function ChatScreen({route,  navigation }: any) {
+  console.log(route.params.postId)
   return (
-    <View style={menu.wrapper}>
-    <ScrollView style={menu.upperContainer} showsVerticalScrollIndicator={false}>
-      <View style={home.menuView}>
-        {allPosts
-          .map((post) => (
-            <Card key={post._id} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
-          ))}
-      </View>
-    </ScrollView>
-    </View>
+    <Text> Hello this is chat time {route.params.postId}</Text>
 
   );
 }

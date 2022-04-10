@@ -10,7 +10,8 @@ export const login = async (email: string, password:string)=>{
       password
     });
     if(response.status === 200){
-      await AsyncStorage.setItem('userID', response.data.token);
+      console.log("login success");
+      await AsyncStorage.setItem('userID', response.data);
       return true;
     }else{
       return false;
@@ -22,12 +23,19 @@ export const login = async (email: string, password:string)=>{
 }
 
 
-export const register = (email: string, password: string, name: string) => {
-  return axios.post("/register", {
+export const register = async (email: string, password: string, name: string) => {
+  console.log(email, password, name);
+  let res = await axios.post(`${baseUrl}/register`, {
     email,
     password,
     name
   });
+  console.log(res.status);
+  if(res.status === 200){
+    return true;
+  }else{
+    return false;
+  }
 };
 
 export const logoutUser = () => {
@@ -46,7 +54,13 @@ const removeValue = async (key:string) => {
 
 export const getUserId = async () => {
   try {
-    return await AsyncStorage.getItem('userID')
+    let res= await AsyncStorage.getItem('userID');
+    if(res==null){
+      return '';
+    }else{
+      console.log(res)
+      return res
+    }
   } catch(e) {
     // read error
     return ''
