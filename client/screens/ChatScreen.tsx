@@ -20,7 +20,7 @@ export default function ChatScreen({ route, navigation }: any) {
   }
 
   useEffect(() => {
-    
+    updateMessages();
   })
 
   const [text, onChangeText] = useState('');
@@ -42,8 +42,10 @@ export default function ChatScreen({ route, navigation }: any) {
         (async () => {
           let content = text;
           onChangeText('');
-          let userId = await getUserId();
-          const res = await createMessage(userId, route.params.postId, content);
+          const userId = await getUserId();
+          console.log(`route: ${route}`)
+          console.log(`route.params.userID: ${userId}`);
+          const res = await createMessage(route.params.userID, route.params.postId, content);
           console.log(res);
           if(res.status==200){
             updateMessages();

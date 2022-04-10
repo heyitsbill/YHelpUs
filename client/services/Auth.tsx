@@ -56,13 +56,16 @@ export const getUserId = async () => {
   try {
     let res= await AsyncStorage.getItem('userID');
     if(res==null){
+      console.log("bad user id")
       return '';
     }else{
+      console.log('good user id')
       console.log(res)
       return res
     }
   } catch(e) {
     // read error
+    console.log('failed to read')
     return ''
   }
 

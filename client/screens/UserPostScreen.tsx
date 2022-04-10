@@ -58,7 +58,7 @@ export default function UserPostScreen({ navigation }: any, props: any) {
       <View style={home.menuView}>
         {myPosts
           .map((post) => (
-            <Card key={post._id} onPressDelete={handleDeletePost} userID={userID} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
+            <Card key={post._id} onPressDelete={handleDeletePost} userID={userID} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id, userID: userID})}}/>
           ))}
       </View>
     </ScrollView>
@@ -67,7 +67,7 @@ export default function UserPostScreen({ navigation }: any, props: any) {
         <View style={home.menuView}>
             {acceptedPosts
                 .map((post) => (
-                    <Card key={post._id} onPressDelete={handleDeletePost} userID={userID} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
+                    <Card key={post._id} onPressDelete={handleDeletePost} userID={userID} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id, userID: userID})}}/>
                 ))}
         </View>
     </ScrollView>

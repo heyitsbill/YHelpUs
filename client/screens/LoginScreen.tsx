@@ -18,7 +18,8 @@ const LoginScreen = (props: AddPostProps) => {
   useEffect(() => {
     (async () => {
         const id = await getUserId();
-        if(id != ''){
+        console.log(`here is id: ${id}`)
+        if(id !== 'undefined'){
             props.navigation.navigate('Home');
         }
     })()
