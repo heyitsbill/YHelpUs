@@ -1,20 +1,57 @@
-import { Text, View, Pressable, ScrollView, ActivityIndicator } from 'react-native'
+import { Text, View, Pressable, ScrollView, ActivityIndicator, TextInput, Button } from 'react-native'
 import { StyleSheet } from 'react-native'
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { RootTabScreenProps } from '../types';
-import { IPost } from '@backend/src/types';
+import { IMessage } from '@backend/src/types';
 import { useState, useEffect } from 'react';
-import { getPosts } from '../services'
+import { createMessage, getMessages, getPosts, getUserId } from '../services'
 import { Card } from '../components/PostComponent';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function ChatScreen({route,  navigation }: any) {
+export default function ChatScreen({ route, navigation }: any) {
   console.log(route.params.postId)
-  return (
-    <Text> Hello this is chat time {route.params.postId}</Text>
+  const [allMessages, setAllMessages] = useState<IMessage[]>([])
+  async function updateMessages() {
+    const res = await getMessages(route.params.postId);
+    if (res.status == 200) {
+      setAllMessages(res.data);
+    }
+  }
 
-  );
-}
+  useEffect(() => {
+    
+  })
+
+  const [text, onChangeText] = useState('');
+
+  return (
+    <>
+      <ScrollView style={styles.chatview}>
+        {allMessages.map((message) => (
+          <Text>{message.from}:{message.content}</Text>
+        ))}
+
+      </ScrollView>
+      <TextInput onChangeText={onChangeText}
+        value={text}
+        style={styles.chatInput}
+      />
+
+      <Button title="Send" onPress={() => {
+        (async () => {
+          let content = text;
+          onChangeText('');
+          let userId = await getUserId();
+          const res = await createMessage(userId, route.params.postId, content);
+          console.log(res);
+          if(res.status==200){
+            updateMessages();
+          }
+        })()
+      }} />
+    </>
+)};
 
 const styles = StyleSheet.create({
   container: {
@@ -31,180 +68,12 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  chatview: {
+    height: '60%',
+    maxHeight: '60%',
+  },
+  chatInput: {
+    height: '20%',
+    maxHeight: '20%',
+  }
 });
-
-const menu = StyleSheet.create({
-    wrapper: {
-      flex: 1,
-      flexDirection: 'column',
-      backgroundColor: '#8aebff',
-    },
-  
-    upperContainer: {
-      flex: 13,
-    },
-  
-    lowerContainer: {
-      width: '100%',
-      height: '18%',
-      backgroundColor: '#fff',
-    },
-  })
-  
-const item = StyleSheet.create({
-    card: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 10,
-      height: 120,
-      elevation: 3,
-      backgroundColor: '#fff',
-      borderRadius: 6,
-      shadowRadius: 2,
-      margin: 4,
-      marginVertical: 8,
-    },
-  
-    leftSide: {
-      flex: 6,
-    },
-  
-    itemName: {
-      fontFamily: 'HindSiliguri-Bold',
-      fontWeight: 'bold',
-      color: '#222',
-      fontSize: 20,
-      marginBottom: 5,
-    },
-  
-    itemDescription: {
-      fontFamily: 'Roboto-Italic',
-      color: '#777',
-      fontSize: 11,
-      flex: 2,
-      marginRight: 10,
-    },
-  
-    itemPrice: {
-      fontFamily: 'HindSiliguri',
-      fontWeight: 'bold',
-      color: '#222',
-      fontSize: 18,
-      //backgroundColor: 'blue'
-    },
-  
-    button: {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.3,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      textAlign: 'center',
-      borderRadius: 10,
-      height: '38%',
-      alignItems: 'center',
-      width: '10%',
-    },
-  
-    buttonText: {
-      justifyContent: 'center',
-      fontFamily: 'Roboto',
-      alignItems: 'center',
-      fontSize: 25,
-      textAlignVertical: 'center',
-    },
-  
-    countText: {
-      fontFamily: 'Roboto',
-      fontWeight: 'bold',
-      fontSize: 24,
-      textAlign: 'center',
-    },
-  
-    spacer: {
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  
-    buttonSpacer: {
-      flex: 1,
-      //justifyContent: 'center',
-      //alignItems: 'center',
-    },
-  
-    outerContainer: {
-      flex: 2,
-      backgroundColor: '#fff',
-    },
-  
-    upperContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      backgroundColor: '#eee',
-      alignItems: 'center',
-      justifyContent: 'space-evenly',
-    },
-  
-    lowerContainer: {
-      flexDirection: 'row',
-      flex: 2,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  
-    priceText: {
-      fontFamily: 'HindSiliguri',
-      color: '#000',
-      fontSize: 18,
-      padding: 10,
-    },
-  
-    checkoutText: {
-      fontFamily: 'HindSiliguri-Bold',
-      color: '#fff',
-      fontSize: 25,
-    },
-  })
-
-const home = StyleSheet.create({
-    app: {
-      flex: 1,
-      backgroundColor: '#eaeaea',
-    },
-  
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'stretch',
-      justifyContent: 'center',
-    },
-  
-    outerContainer: {
-      flex: 1,
-      flexDirection: 'column',
-      padding: 0,
-      marginTop: 5,
-      marginBottom: 10,
-      marginHorizontal: 12,
-    },
-  
-    textContent: {
-      justifyContent: 'flex-end',
-      marginBottom: 15,
-      marginLeft: 10,
-    },
-  
-    menuView: {
-      margin: 8,
-      backgroundColor: "#8aebff",
-    },
-  
-    footer: {
-      width: '100%',
-      height: '18%',
-      backgroundColor: '#fff',
-    },
-  })
-  

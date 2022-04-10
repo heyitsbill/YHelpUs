@@ -4,7 +4,7 @@ import { IMessage } from "@backend/src/types";
 const baseUrl = 'http://localhost:4000';
 
 export const createMessage = async (userId:string, postId: string, content: string) => {
-  return axios.post(`${baseUrl}/messages`, {from: userId, content: content, postId: postId, createdAt: new Date()});
+  return axios.post(`${baseUrl}/messages`, {from: userId, content: content, postId: postId});
 };
 
 // export const patchJob = (postID: string, job: IJob) => {

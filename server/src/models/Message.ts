@@ -15,7 +15,6 @@ const MessageSchema = new mongoose.Schema({
   },
   createdAt:{
     type: Date,
-    required: true
   },
   postId:{
     type: Schema.Types.ObjectId,

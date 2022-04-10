@@ -15,8 +15,9 @@ router.get('/:currentUser', async(req: Request, res: Response) => {
   }
 })
 
-router.post('/:currentPost/:currentUser', (req: Request, res: Response) => {
+router.post('/', (req: Request, res: Response) => {
   const message = req.body;
+  console.log(message);
   const newMsg = new Message(message);
   newMsg.save((err: CallbackError, savedMsg: IMessage) => {
     if(err) return res.status(500).send("A database error occurred.");
