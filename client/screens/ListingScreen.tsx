@@ -12,13 +12,25 @@ export default function ListingScreen({ navigation }: RootTabScreenProps<'TabOne
   const [allPosts, setAllPosts] = useState<IPost[]>([])
   
   //fetch all posts
-    useEffect(() => {
+    useEffect(()=>{
+      const unsubscribe = navigation.addListener('focus', () => {
+        // The screen is focused
+        // Call any action
         (async () => {
-            const posts = await getPosts()
-            const ourPosts = posts.data
-            setAllPosts(ourPosts)
-        })()
-    }, [])
+                  const posts = await getPosts()
+                  const ourPosts = posts.data
+                  setAllPosts(ourPosts)
+              })()
+      });
+      return unsubscribe;
+    }, [navigation]);
+    // useEffect(() => {
+    //     (async () => {
+    //         const posts = await getPosts()
+    //         const ourPosts = posts.data
+    //         setAllPosts(ourPosts)
+    //     })()
+    // }, [])
 
   const handlePressPost = (post: IPost) => {
   }

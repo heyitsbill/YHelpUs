@@ -2,9 +2,11 @@ import { Form, FormItem, Picker } from 'react-native-form-component';
 import { useState } from 'react';
 import { IPost } from '@backend/src/types';
 import { createPost } from '../services';
+import { View, StyleSheet, Button, Alert , Text} from "react-native";
 
 interface AddPostProps {
     userID: string;
+    navigation: any;
 }
 
 const AddPostScreen = (props: AddPostProps) => {
@@ -58,6 +60,8 @@ const AddPostScreen = (props: AddPostProps) => {
         setDuration(value);
     }
 
+    const [error, setError] = useState(Boolean);
+
     const handleSubmit = async () => {
         if(days !== 0 || hours !== 0){
             let ourHours = 0;
@@ -72,6 +76,11 @@ const AddPostScreen = (props: AddPostProps) => {
             currPost.price = parseInt(price);
 
             const newPost = await createPost(currPost);
+            if(newPost.status == 200){
+                props.navigation.navigate('MyPosts');
+            }else{
+                setError(true);
+            }
         }
     }
 
@@ -91,6 +100,7 @@ const AddPostScreen = (props: AddPostProps) => {
 
 
 return (
+    <>
     <Form onButtonPress={handleSubmit}>
       <FormItem
         label="Title"
@@ -182,7 +192,19 @@ return (
     
     
     </Form>
+    {(error == true) &&
+        <Text style={styles.error}>Invalid email or password!</Text>
+      }
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+    error: {
+      color: 'red',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  });
 
 export default AddPostScreen;
