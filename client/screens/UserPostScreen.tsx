@@ -4,9 +4,12 @@ import { StyleSheet } from 'react-native'
 import EditScreenInfo from '../components/EditScreenInfo';
 import { RootTabScreenProps } from '../types';
 import { IPost } from '@backend/src/types';
-import { useState, useEffect } from 'react';
-import { getUserPosts, getAcceptedPosts, getUserId, deletePost } from '../services'
+import { useState, useEffect, useLayoutEffect } from 'react';
+import { getUserPosts, getAcceptedPosts, getUserId, deletePost, logoutUser } from '../services'
 import { Card } from '../components/PostComponent';
+import { Ionicons } from '@expo/vector-icons'; 
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+
 
 export default function UserPostScreen({ navigation }: any, props: any) {
   const [myPosts, setMyPosts] = useState<IPost[]>([])
@@ -19,6 +22,16 @@ export default function UserPostScreen({ navigation }: any, props: any) {
         setUserID(id)
     })()
 }, [userID])
+
+  
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <MaterialCommunityIcons name="logout" size={24} color="black" onPress={()=>{logoutUser(); navigation.navigate("Login")}} />
+        ),
+    });
+  }, [navigation]);
 
   //fetch all posts
   useEffect(()=>{
