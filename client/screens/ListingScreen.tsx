@@ -30,7 +30,7 @@ export default function ListingScreen({ navigation }: RootTabScreenProps<'TabOne
       <View style={home.menuView}>
         {allPosts
           .map((post) => (
-            <Card post={post}/>
+            <Card key={post._id} post={post}/>
           ))}
       </View>
     </ScrollView>
