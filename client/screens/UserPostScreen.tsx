@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { getUserPosts, getAcceptedPosts } from '../services'
 import { Card } from '../components/PostComponent';
 
-export default function UserPostScreen({ navigation }: RootTabScreenProps<'TabOne'>, props: any) {
+export default function UserPostScreen({ navigation }: any, props: any) {
   const [myPosts, setMyPosts] = useState<IPost[]>([])
   const [acceptedPosts, setAcceptedPosts] = useState<IPost[]>([])
 
@@ -39,7 +39,7 @@ export default function UserPostScreen({ navigation }: RootTabScreenProps<'TabOn
       <View style={home.menuView}>
         {myPosts
           .map((post) => (
-            <Card key={post._id} post={post}/>
+            <Card key={post._id} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
           ))}
       </View>
     </ScrollView>
@@ -48,7 +48,7 @@ export default function UserPostScreen({ navigation }: RootTabScreenProps<'TabOn
         <View style={home.menuView}>
             {acceptedPosts
                 .map((post) => (
-                    <Card key={post._id} post={post}/>
+                    <Card key={post._id} post={post} onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
                 ))}
         </View>
     </ScrollView>

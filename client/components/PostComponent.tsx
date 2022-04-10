@@ -34,14 +34,8 @@ export const Card = (props: CardProps) => {
   }
   return (
       <View style={{ margin: 4 }}>
-          <Pressable onPress={onPressCard}
-            style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1,
-                                       backgroundColor: "#8ac6ff", 
-                                       borderRadius: "16", 
-                                       borderWidth: 2, 
-                                       borderColor: "black", 
-                                       borderStyle: "solid",
-                                       padding: 8 }]}>
+          <Pressable onPress={props.onPress}
+            style={styles.pressable}>
                 <Text style={{ fontSize: 24, fontFamily: "Gill Sans", fontWeight: 'bold'}}>{props.post.title}</Text>
                 <Text style={{ fontSize: 20, fontFamily: "Gill Sans"}}>{props.post.description}</Text>
                 <Text>{props.post.price === 0 ? "Free" : `$${props.post.price}`}</Text>
@@ -52,6 +46,18 @@ export const Card = (props: CardProps) => {
         
   )
 }
+
+const styles = StyleSheet.create({
+  pressable:{
+    opacity: 1,
+    backgroundColor: "#8ac6ff", 
+    borderRadius: 16, 
+    borderWidth: 2, 
+    borderColor: "black", 
+    borderStyle: "solid",
+    padding: 8
+  }
+})
 
 const card = StyleSheet.create({
     cardText1: {
