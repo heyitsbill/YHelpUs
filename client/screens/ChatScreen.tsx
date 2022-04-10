@@ -29,7 +29,7 @@ export default function ChatScreen({ route, navigation }: any) {
     <>
       <ScrollView style={styles.chatview}>
         {allMessages.map((message) => (
-          <Text>{message.from}:{message.content}</Text>
+          <Text key={message._id}>{message.from}:{message.content}</Text>
         ))}
 
       </ScrollView>
