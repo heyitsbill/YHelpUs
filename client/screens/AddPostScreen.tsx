@@ -33,13 +33,10 @@ const AddPostScreen = (props: AddPostProps) => {
         if(!isNaN(number)) {
             if (number.length > 1 && number.charAt(0) === '0') {
                 setPrice(number.substring(1));
-                currPost.price = parseInt(number.substring(1));
             } else if (number.length == 0) {
                 setPrice('0');
-                currPost.price = 0;
             } else {
                 setPrice(number);
-                currPost.price = parseInt(number);
             }
         }
     }
@@ -62,9 +59,7 @@ const AddPostScreen = (props: AddPostProps) => {
     }
 
     const handleSubmit = async () => {
-        console.log("called")
         if(days !== 0 || hours !== 0){
-            console.log("now here")
             let ourHours = 0;
             if(multipleDays){
                 ourHours = days * 24
@@ -74,10 +69,9 @@ const AddPostScreen = (props: AddPostProps) => {
             const deadline = new Date();
             const finDL = addHours(deadline, ourHours);
             currPost.time = finDL;
+            currPost.price = parseInt(price);
 
             const newPost = await createPost(currPost);
-            console.log(`new post: ${newPost.data}`);
-
         }
     }
 
