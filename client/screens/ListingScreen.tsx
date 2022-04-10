@@ -62,7 +62,7 @@ export default function ListingScreen({ navigation }: any) {
       <View style={home.menuView}>
         {allPosts
           .map((post) => (
-            <Card key={post._id} onPressDelete={handleDeletePost} post={post} userID={userID}  onPress={()=>{navigation.navigate('Chat', {postId:post._id})}}/>
+            <Card key={post._id} onPressDelete={handleDeletePost} post={post} userID={userID}  onPress={()=>{navigation.navigate('Chat', {postId:post._id, userID: userID})}}/>
           ))}
       </View>
     </ScrollView>
