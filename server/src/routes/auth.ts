@@ -52,7 +52,7 @@ router.post('/login', (req: Request, res: Response) => {
       }
       const token = jwt.sign({ id: user._id }, process.env.JWT_KEY || "placeholder");
       
-      return res.send(token);
+      return res.send(user._id);
     })
   })
   (req, res);
@@ -60,14 +60,15 @@ router.post('/login', (req: Request, res: Response) => {
 
 // Create new account
 router.post('/register', (req: Request, res: Response) => {
-	const { email, password } = req.body
+	const { email, password , name} = req.body
 	User.findOne({ 'email': email }, (err: NativeError, userMatch: IUser) => {
 		if (userMatch) {
 			return res.status(409).send(`Email ${email} already taken.`);
 		}
 		const newUser = new User({
 			'email': email,
-			'password': password
+			'password': password,
+      'name': name
 		});
 		newUser.save((err: CallbackError, savedUser: IUser) => {
 			if (err) return res.status(500).send("A database error occurred.");

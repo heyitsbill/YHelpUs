@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Pressable } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { IPost } from '@backend/src/types'
-import InformationCard from '@paraboly/react-native-information-card'
 
 interface CardProps {
     post: IPost,
@@ -84,7 +83,7 @@ export const Card = (props: CardProps) => {
 
   return (
       <View style={{margin: 4}}>
-          <InformationCard title={props.description}/>
+        
       </View>
   )
 }

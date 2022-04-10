@@ -9,6 +9,7 @@
         "install-client": "cd client && yarn"
     },
     "dependencies": {
-        "@google-cloud/language": "^4.3.2"
+        "@google-cloud/language": "^4.3.2",
+        "dotenv": "^16.0.0"
     }
 }
