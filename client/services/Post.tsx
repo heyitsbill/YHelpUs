@@ -3,8 +3,15 @@ import { IPost } from "@backend/src/types";
 
 const baseUrl = 'http://localhost:4000';
 
-export const createPost = (post: IPost) => {
-  return axios.post(`${baseUrl}/post`, post);
+export const createPost = async (post: IPost) => {
+  try {
+    const response = await axios.post(`${baseUrl}/post`, post);
+    if (response.status === 200) {
+      return response;
+    }} catch (e) {
+    // error
+    return e.message;
+  }
 };
 
 // export const patchJob = (postID: string, job: IJob) => {
