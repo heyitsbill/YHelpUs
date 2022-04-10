@@ -28,7 +28,7 @@ const SignupScreen = (props: SignupProps) => {
     (async () => {
         const id = await getUserId();
         if(id != ''){
-            props.navigation.navigate('ListingScreen');
+            props.navigation.navigate('Home');
         }
     })()
 }, [])

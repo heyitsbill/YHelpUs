@@ -19,7 +19,7 @@ const LoginScreen = (props: AddPostProps) => {
     (async () => {
         const id = await getUserId();
         if(id != ''){
-            props.navigation.navigate('ListingScreen');
+            props.navigation.navigate('Home');
         }
     })()
 }, [])
@@ -28,7 +28,7 @@ const LoginScreen = (props: AddPostProps) => {
       const res = await login(email, password);
       console.log("helloo");
       if (res) {
-          props.navigation.navigate('ListingScreen');
+          props.navigation.navigate('Home');
       }else{
           setError(true);
       }

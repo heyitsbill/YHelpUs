@@ -12,6 +12,46 @@ import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import ListingScreen from './screens/ListingScreen';
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import UserPostScreen from './screens/UserPostScreen';
+import MaterialCommunityIcons from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons'; 
+import { FontAwesome5 } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
+
+
+const Tab = createBottomTabNavigator();
+function Home() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="ListingScreen" 
+              component={ListingScreen}
+              options={{title: 'All Posts',
+              tabBarIcon: ({ color, size }) => (
+                <FontAwesome5 name="clipboard-list" size={24} color="black" />
+                ),
+              }} />
+      <Tab.Screen
+              name="NewPost"
+              component={AddPostScreen}
+              options={{ title: 'Create Posting' ,
+              tabBarIcon: ({ color, size }) => (
+                <SimpleLineIcons name="plus" size={24} color="black" />
+              ),
+            }}
+            />
+      <Tab.Screen
+              name="MyPosts"
+              component={UserPostScreen}
+              options={{ title: 'My Posts' ,
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="person-circle" size={24} color="black" />              ),
+            }}
+            />
+    </Tab.Navigator>
+  );
+}
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -27,12 +67,10 @@ export default function App() {
           <Stack.Navigator>
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignupScreen} />
-            <Stack.Screen
-              name="NewPost"
-              component={AddPostScreen}
-              options={{ title: 'Create New Post' }}
-            />
-            <Stack.Screen name="ListingScreen" component={ListingScreen} />
+            <Stack.Screen name="Home" 
+              component={Home}
+              options={{headerShown: false}}/>
+            
           </Stack.Navigator>
         </NavigationContainer>
         <StatusBar />
@@ -40,3 +78,5 @@ export default function App() {
     );
   }
 }
+
+
