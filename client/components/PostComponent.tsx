@@ -12,78 +12,91 @@ interface CardProps {
 
 export const Card = (props: CardProps) => {
 
+  const onPressCard = () => {
+      console.log('pressed')
+    }
 
-  const [isOpen, setIsOpen] = useState(true)
-  const [openTimeHours, setOpenTimeHours] = useState(0)
-  const [closeTimeHours, setCloseTimeHours] = useState(0)
-  const [openTimeMinutes, setOpenTimeMinutes] = useState(0)
-  const [closeTimeMinutes, setCloseTimeMinutes] = useState(0)
-
-  // determines whether the post is currently open
-  function currentlyOpen() {
-
-    const h = new Date().getHours()
-    const m = new Date().getMinutes()
-
-    if (openTimeHours < closeTimeHours) {
-      // standard case
-      return (
-        (h > openTimeHours && h < closeTimeHours) ||
-        (h == openTimeHours && m >= openTimeMinutes) ||
-        (h == closeTimeHours && m < closeTimeMinutes)
-      )
-    } else if (openTimeHours > closeTimeHours) {
-      // time wraps around midnight
-      return (
-        h > openTimeHours ||
-        h < closeTimeHours ||
-        (h == openTimeHours && m >= openTimeMinutes) ||
-        (h == closeTimeHours && m < closeTimeMinutes)
-      )
+  const timeRemaining = (post: IPost) => {
+    const now = new Date();
+    const postTime = new Date(post.time);
+    const diff = postTime.getTime() - now.getTime();
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    if(days > 0) {
+        if(days === 1) {
+            return `${days} day left on posting`;
+        } else {
+            return `${days} days left on posting`;
+        }
     } else {
-      // within the same hour
-      return m >= openTimeMinutes && m < closeTimeMinutes
+        return `${hours} hours left on posting`;
     }
   }
-
-  // immediately check if the buttery is open
-  useEffect(() => {
-    setIsOpen(currentlyOpen())
-  }, [isOpen])
-
-  //check every minute whether the buttery is open
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsOpen(currentlyOpen())
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [isOpen])
-
-  // find if post is still open
-    
-            
-            
-
-  // takes openTime and closeTime and puts them into clean text form. Assumes (h)h:(m)m form with optional pm/am
-  function cleanTime() {
-    const cleanOpen =
-      (openTimeHours % 12) +
-      ':' +
-      (openTimeMinutes < 10 ? '0' : '') +
-      openTimeMinutes +
-      (openTimeHours > 12 ? 'pm' : 'am')
-    const cleanClose =
-      (closeTimeHours % 12) +
-      ':' +
-      (closeTimeMinutes < 10 ? '0' : '') +
-      closeTimeMinutes +
-      (closeTimeHours > 12 ? 'pm' : 'am')
-    return cleanOpen + ' - ' + cleanClose
-  }
-
   return (
-      <View style={{margin: 4}}>
-        
+      <View style={{ margin: 4 }}>
+          <Pressable onPress={onPressCard}
+            style={({ pressed }) => [{ opacity: pressed ? 0.6 : 1,
+                                       backgroundColor: "#8ac6ff", 
+                                       borderRadius: "16", 
+                                       borderWidth: 2, 
+                                       borderColor: "black", 
+                                       borderStyle: "solid",
+                                       padding: 8 }]}>
+                <Text style={{ fontSize: 24, fontFamily: "Gill Sans", fontWeight: 'bold'}}>{props.post.title}</Text>
+                <Text style={{ fontSize: 20, fontFamily: "Gill Sans"}}>{props.post.description}</Text>
+                <Text>{props.post.price === 0 ? "Free" : `$${props.post.price}`}</Text>
+                <Text>{`Expected duration: ${props.post.length}`}</Text>
+                <Text>{timeRemaining(props.post)}</Text>            
+            </Pressable>
       </View>
+        
   )
 }
+
+const card = StyleSheet.create({
+    cardText1: {
+      textAlignVertical: 'bottom',
+      fontFamily: 'HindSiliguri-Bold',
+      fontWeight: 'bold',
+      color: '#fff',
+      fontSize: 22,
+      marginBottom: 25,
+      marginTop: 15,
+    },
+  
+    textContainer: {
+      flex: 1,
+    },
+  
+    cardText2: {
+      fontFamily: 'Roboto-Italic',
+      marginBottom: 15,
+    },
+  
+    card: {
+      flex: 1,
+      height: '100%',
+      elevation: 3,
+      backgroundColor: '#fff',
+      borderRadius: 6,
+      shadowRadius: 2,
+      marginVertical: 8,
+    },
+  
+    cardContent: {
+      flex: 1,
+      flexDirection: 'row',
+      marginLeft: 10,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingLeft: 10,
+      opacity: 1,
+    },
+  
+    butteryIcon: {
+      width: 75,
+      height: 75,
+      marginVertical: 12,
+      marginRight: 10,
+    },
+  })
