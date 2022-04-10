@@ -13,16 +13,22 @@ export default function UserPostScreen({ navigation }: RootTabScreenProps<'TabOn
   const [acceptedPosts, setAcceptedPosts] = useState<IPost[]>([])
 
   //fetch all posts
-    useEffect(() => {
-        (async () => {
-            const posts = await getUserPosts('6252257bb24f8e6622ed8886')
-            const ourPosts = posts.data
-            setMyPosts(ourPosts)
-            const postsAgain = await getAcceptedPosts('6252257bb24f8e6622ed8886')
-            const ourPostsAgain = postsAgain.data
-            setAcceptedPosts(ourPostsAgain)
-        })()
-    }, [])
+  useEffect(()=>{
+    const unsubscribe = navigation.addListener('focus', () => {
+      // The screen is focused
+      // Call any action
+      (async () => {
+        const posts = await getUserPosts('6252257bb24f8e6622ed8886')
+        const ourPosts = posts.data
+        setMyPosts(ourPosts)
+        const postsAgain = await getAcceptedPosts('6252257bb24f8e6622ed8886')
+        const ourPostsAgain = postsAgain.data
+        setAcceptedPosts(ourPostsAgain)
+    })()
+    });
+    return unsubscribe;
+  }, [navigation]);
+
 
   const handlePressPost = (post: IPost) => {
   }
