@@ -106,7 +106,7 @@ const AddPostScreen = (props: AddPostProps) => {
 
 
 return (
-    <>
+    <View style={{marginLeft: "5%", marginRight: "5%", marginTop: "5%", marginBottom: "5%"}}>
     <Form onButtonPress={handleSubmit}>
       <FormItem
         label="Title"
@@ -201,7 +201,7 @@ return (
     {(error == true) &&
         <Text style={styles.error}>Invalid email or password!</Text>
       }
-    </>
+    </View>
   );
 }
 
