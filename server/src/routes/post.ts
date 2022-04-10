@@ -6,10 +6,8 @@ import { IPost } from "../types";
 const router = Router();
 
 router.post("/", (req: Request, res: Response) => {
-    console.log(req.body)
     const post = req.body;
     const newPost = new Post(post);
-    console.log(newPost);
     newPost.save((err: CallbackError, savedJob: IPost) => {
       if(err) return res.status(500).send("A database error occurred.");
       return res.json(savedJob);
@@ -31,6 +29,17 @@ router.get("/", async(req: Request, res: Response) => {
   } catch (err) {
     res.status(500).send("A database error occurred.");
   }
+});
+
+//mark post as accepted
+router.patch("/:postID", async(req: Request, res: Response) => {
+  const patchPost = req.body;
+  const filter = { _id: req.params.postID };
+  const opts = { new: true, runValidators: true };
+  Post.findOneAndUpdate(filter, patchPost, opts, (err: CallbackError, savedPost: IPost) => {
+    if(err) return res.status(500).send("A database error occurred.");
+    return res.json(savedPost);
+  });
 });
 
 router.get("/:userID", async(req: Request, res: Response) => {

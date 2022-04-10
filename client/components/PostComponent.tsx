@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Pressable } from 'react-native'
 import { StyleSheet } from 'react-native'
 import { IPost } from '@backend/src/types'
+import { FontAwesome } from '@expo/vector-icons';
+import { deletePost } from '../services'
 
 interface CardProps {
     post: IPost,
     onPress?: () => void
+    onPressDelete?: any
 }
 
 
@@ -14,6 +17,10 @@ export const Card = (props: CardProps) => {
 
   const onPressCard = () => {
       console.log('pressed')
+    }
+ 
+  const onPressTrash = (post: IPost) => {
+        props.onPressDelete(props.post._id)
     }
 
   const timeRemaining = (post: IPost) => {
@@ -42,11 +49,32 @@ export const Card = (props: CardProps) => {
                                        borderColor: "black", 
                                        borderStyle: "solid",
                                        padding: 8 }]}>
-                <Text style={{ fontSize: 24, fontFamily: "Gill Sans", fontWeight: 'bold'}}>{props.post.title}</Text>
-                <Text style={{ fontSize: 20, fontFamily: "Gill Sans"}}>{props.post.description}</Text>
-                <Text>{props.post.price === 0 ? "Free" : `$${props.post.price}`}</Text>
-                <Text>{`Expected duration: ${props.post.length}`}</Text>
-                <Text>{timeRemaining(props.post)}</Text>            
+                <View style={{flexDirection: "row"}}>
+                    {props.post.authorID === '6252257bb24f8e6622ed8886' ? 
+                    
+                    <>
+                    <View style={{ maxWidth: "75%" }}>
+                        <Text style={{ fontSize: 24, fontFamily: "Gill Sans", fontWeight: 'bold' }}>{props.post.title}</Text>
+                        <Text style={{ fontSize: 20, fontFamily: "Gill Sans" }}>{props.post.description}</Text>
+                        <Text>{props.post.price === 0 ? "Free" : `$${props.post.price}`}</Text>
+                        <Text>{`Expected duration: ${props.post.length}`}</Text>
+                        <Text>{timeRemaining(props.post)}</Text>
+                    </View>
+                    <View style={{ maxWidth: "25%", marginLeft: "auto", marginRight: 25, marginTop: "auto", marginBottom: "auto" }}>
+                        <Pressable onPress={onPressTrash}>
+                            <TrashIcon name="trash" color="black" />
+                        </Pressable>
+                    </View></> 
+                      : 
+                    <><View>
+                        <Text style={{ fontSize: 24, fontFamily: "Gill Sans", fontWeight: 'bold' }}>{props.post.title}</Text>
+                        <Text style={{ fontSize: 20, fontFamily: "Gill Sans" }}>{props.post.description}</Text>
+                        <Text>{props.post.price === 0 ? "Free" : `$${props.post.price}`}</Text>
+                        <Text>{`Expected duration: ${props.post.length}`}</Text>
+                        <Text>{timeRemaining(props.post)}</Text>
+                    </View></>}
+                    <></>
+                </View>      
             </Pressable>
       </View>
         
@@ -100,3 +128,10 @@ const card = StyleSheet.create({
       marginRight: 10,
     },
   })
+
+  function TrashIcon(props: {
+    name: React.ComponentProps<typeof FontAwesome>['name'];
+    color: string;
+  }) {
+    return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  }

@@ -5,7 +5,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { RootTabScreenProps } from '../types';
 import { IPost } from '@backend/src/types';
 import { useState, useEffect } from 'react';
-import { getPosts } from '../services'
+import { getPosts, deletePost } from '../services'
 import { Card } from '../components/PostComponent';
 
 export default function ListingScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
@@ -23,6 +23,13 @@ export default function ListingScreen({ navigation }: RootTabScreenProps<'TabOne
   const handlePressPost = (post: IPost) => {
   }
 
+  const handleDeletePost = async (postID: string) => {
+    await deletePost(postID)
+    const posts = await getPosts()
+    const ourPosts = posts.data
+    setAllPosts(ourPosts)
+    }
+
 
   return (
     <View style={menu.wrapper}>
@@ -30,7 +37,7 @@ export default function ListingScreen({ navigation }: RootTabScreenProps<'TabOne
       <View style={home.menuView}>
         {allPosts
           .map((post) => (
-            <Card key={post._id} post={post}/>
+            <Card key={post._id} post={post} onPressDelete={handleDeletePost}/>
           ))}
       </View>
     </ScrollView>

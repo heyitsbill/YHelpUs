@@ -11,6 +11,10 @@ export const createPost = (post: IPost) => {
 //   return axios.patch(`/job/${jobID}`, job);
 // };
 
+export const patchPost = (postID: string, post: IPost) => {
+  return axios.patch(`${baseUrl}/post/${postID}`, post);
+};
+
 export const deletePost = async (postID: string) => {
   return axios.delete(`${baseUrl}/post/${postID}`);
 };
