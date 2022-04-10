@@ -9,6 +9,7 @@ interface CardProps {
     post: IPost,
     onPress?: () => void
     onPressDelete?: any
+    userID: string
 }
 
 
@@ -44,8 +45,7 @@ export const Card = (props: CardProps) => {
           <Pressable onPress={props.onPress}
             style={styles.pressable}>
                 <View style={{flexDirection: "row"}}>
-                    {props.post.authorID === '6252257bb24f8e6622ed8886' ? 
-                    
+                    {props.post.authorID === props.userID ? 
                     <>
                     <View style={{ maxWidth: "75%" }}>
                         <Text style={{ fontSize: 24, fontFamily: "Gill Sans", fontWeight: 'bold' }}>{props.post.title}</Text>
