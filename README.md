@@ -18,3 +18,5 @@ We used the MERNN stack due to it's ease of use and separation of concerns. Addi
 * Focus on security and privacy
 * More filtering features
 * UI revamp
+
+Note: Built for YHack 2022
