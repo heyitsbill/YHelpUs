@@ -28,9 +28,9 @@ router.post('/', (req: Request, res: Response) => {
 router.get('/:postId', async(req: Request, res: Response) => {
   try {
     const selector = {postId: req.params.postId};
-    // const messages = await Message.find(selector);
-    const messages = await Message.find();
-    console.log(messages);
+    const messages = await Message.find(selector);
+    // const messages = await Message.find();
+    // console.log(messages);
     return res.send(messages)
   } catch (err) {
     res.status(500).send("A database error occurred.");

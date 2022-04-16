@@ -44,10 +44,11 @@ function Home() {
       <Tab.Screen
               name="MyPosts"
               component={UserPostScreen}
-              options={{ title: 'My Posts' ,
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="person-circle" size={24} color="black" />              ),
-            }}
+              options={({ navigation, route }) => ({
+                headerTitle: 'My Posts',
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="person-circle" size={24} color="black" />              ),
+              })}
             />
       <Tab.Screen
               name="Chat"

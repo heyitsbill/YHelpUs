@@ -8,9 +8,8 @@ const language = require('@google-cloud/language');
 
 /* takes in text from a post and determines if it should be flagged
    for inappropriate content using GCP NLP */
-async function sentimenter(text) {
+async function sentimenter(text:string) {
    // Instantiates a client
-   console.log(process.env.TEST_VAR);
    const client = new language.LanguageServiceClient();
  
    const document = {
@@ -28,23 +27,21 @@ async function sentimenter(text) {
 /* takes in text from a post and determines if it should be flagged
    for inappropriate content using GCP NLP
    TRUE output means it's possibly inappropriate */
-async function flagger(text) {
+export async function flagger(text:string) {
+   //return false;
    let [sentiment, sentences] = await sentimenter(text);
    if (sentiment < -0.6) {
-      console.log('true');
       return true;
    }
    for (var i = 0; i < sentences.length; i++) {
       if (sentences[i].sentiment.score < -0.6) {
-         console.log('true');
          return true
       }
    }
-   console.log('false');
    return false
 }
 
-async function classifier(text) {
+async function classifier(text:string) {
    // Creates a client
    const client = new language.LanguageServiceClient();
 
@@ -57,19 +54,19 @@ async function classifier(text) {
    // Classifies text in the document
    const [classification] = await client.classifyText({document});
    console.log('Categories:');
-   classification.categories.forEach(category => {
+   classification.categories.forEach((category:any) => {
    console.log(`Name: ${category.name}, Confidence: ${category.confidence}`);
    });
 };
 
-function test(sentence) {
+function test(sentence:string) {
    const f = (async () => await flagger(sentence))();
    console.log(`Sentence: ${sentence}`);
    console.log(`  flag: ${f}`);
 }
 
 // tests that increasing flaggable
-const array = ['Hey this might be a kinda odd request but does anyone wanna help me move luggage? It would be from TD to Saybrook because I\'m moving into the septet there :(?', 'boooobies. lick my balls! bitch ass; ur kinda a shitter! duh duh duh. hello! is this twenty words yet fuck you ur ass im better than u yeah haha suck it loser!!!!!', 'boobies', 'I HATE PEOPLE', 'i hate everyone', 'suck my balls?', 'suck my balls bitchass'];
+// const array = ['Hey this might be a kinda odd request but does anyone wanna help me move luggage? It would be from TD to Saybrook because I\'m moving into the septet there :(?', 'boooobies. lick my balls! bitch ass; ur kinda a shitter! duh duh duh. hello! is this twenty words yet fuck you ur ass im better than u yeah haha suck it loser!!!!!', 'boobies', 'I HATE PEOPLE', 'i hate everyone', 'suck my balls?', 'suck my balls bitchass'];
 // array.forEach(flagger);
-array.forEach(test);
+// array.forEach(test);
 // array.forEach(classifier);

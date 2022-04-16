@@ -78,7 +78,7 @@ export const Card = (props: CardProps) => {
 const styles = StyleSheet.create({
   pressable:{
     opacity: 1,
-    backgroundColor: "#8ac6ff", 
+    backgroundColor: "#CCD1D1", 
     borderRadius: 16, 
     borderWidth: 2, 
     borderColor: "black", 
